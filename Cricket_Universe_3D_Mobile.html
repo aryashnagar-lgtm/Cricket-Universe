@@ -31,7 +31,8 @@
 body[data-control="joystick"] #joystick-zone{display:block}
 body[data-control="joystick"] .touch-controls{left:145px}
 @media(max-width:390px){body[data-control="joystick"] .touch-controls{left:132px}#joystick-zone{width:104px;height:104px}#joystick-knob{left:30px;top:30px}}
-\n
+
+
 /* Main menu and match setup */
 body.menu-open{overflow:hidden}
 #game-menu{position:fixed;inset:0;z-index:50;overflow:auto;background:radial-gradient(ellipse at 50% 0%,#24516a 0%,#0b2130 55%,#06131d 100%);padding:clamp(16px,4vw,42px);display:flex;align-items:center;justify-content:center}
@@ -58,7 +59,13 @@ body.menu-open{overflow:hidden}
 #home-button{position:fixed;top:10px;left:10px;z-index:20;display:none}
 body.in-match #home-button{display:block}
 @media(max-width:560px){.menu-grid,.setup-grid{grid-template-columns:1fr}.menu-tile{min-height:82px}.menu-sub{margin-bottom:18px}}
-</style></head><body class="menu-open">\n
+
+#game-menu{position:fixed!important;inset:0!important;z-index:9999!important;display:flex!important;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,#24516a 0%,#0b2130 55%,#06131d 100%);overflow-y:auto}
+#game-menu[hidden]{display:none!important}
+body.menu-open>header,body.menu-open>.control-mode,body.menu-open>main,body.menu-open>footer{visibility:hidden}
+
+</style></head><body class="menu-open">
+
 <div id="game-menu">
  <div class="menu-wrap">
   <h1 class="menu-brand">CRICKET <span>UNIVERSE</span></h1>
@@ -177,7 +184,8 @@ function resize(){const w=arena.clientWidth,h=arena.clientHeight;renderer.setSiz
   const b=document.querySelector('[data-shot="'+shot+'"]');if(b)b.click();
  }
 })();
-\n
+
+
 /* Menu navigation and match configuration */
 (()=>{
  const menu=document.getElementById('game-menu'),home=document.getElementById('menu-home'),quick=document.getElementById('menu-quick'),info=document.getElementById('menu-info');
