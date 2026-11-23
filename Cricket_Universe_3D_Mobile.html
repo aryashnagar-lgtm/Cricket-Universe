@@ -31,7 +31,66 @@
 body[data-control="joystick"] #joystick-zone{display:block}
 body[data-control="joystick"] .touch-controls{left:145px}
 @media(max-width:390px){body[data-control="joystick"] .touch-controls{left:132px}#joystick-zone{width:104px;height:104px}#joystick-knob{left:30px;top:30px}}
-\n</style></head><body>
+\n
+/* Main menu and match setup */
+body.menu-open{overflow:hidden}
+#game-menu{position:fixed;inset:0;z-index:50;overflow:auto;background:radial-gradient(ellipse at 50% 0%,#24516a 0%,#0b2130 55%,#06131d 100%);padding:clamp(16px,4vw,42px);display:flex;align-items:center;justify-content:center}
+#game-menu[hidden]{display:none}
+.menu-wrap{width:min(100%,980px);margin:auto}
+.menu-brand{text-align:center;font-size:clamp(28px,6vw,52px);font-weight:1000;letter-spacing:3px;margin:0 0 5px}
+.menu-brand span{color:#ffc857}
+.menu-sub{text-align:center;color:#b7cbd5;margin:0 0 28px}
+.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.menu-tile{min-height:105px;text-align:left;padding:18px;border:1px solid #456679;border-radius:15px;background:linear-gradient(135deg,#18384a,#102432);color:#f4f7fa;cursor:pointer}
+.menu-tile strong{display:block;font-size:18px;margin-bottom:5px}
+.menu-tile span{font-size:12px;color:#b3c8d2}
+.menu-tile.primary-tile{background:linear-gradient(135deg,#f5c65d,#d98e2f);color:#18232b;border:0}
+.menu-tile.primary-tile span{color:#36434a}
+.menu-panel{background:#102432;border:1px solid #35566a;border-radius:16px;padding:clamp(15px,3vw,25px);margin-top:16px}
+.menu-panel h2{font-size:21px;margin:0 0 16px}
+.setup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.setup-field label{display:block;font-size:12px;color:#b7cbd5;margin:0 0 6px}
+.setup-field select{margin:0;min-height:42px}
+.menu-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.menu-actions .btn{min-width:120px}
+.menu-note{font-size:12px;color:#a9bec9;line-height:1.5;margin:14px 0 0}
+#menu-status{color:#ffd77d;min-height:18px;font-size:13px;margin-top:12px}
+#home-button{position:fixed;top:10px;left:10px;z-index:20;display:none}
+body.in-match #home-button{display:block}
+@media(max-width:560px){.menu-grid,.setup-grid{grid-template-columns:1fr}.menu-tile{min-height:82px}.menu-sub{margin-bottom:18px}}
+</style></head><body class="menu-open">\n
+<div id="game-menu">
+ <div class="menu-wrap">
+  <h1 class="menu-brand">CRICKET <span>UNIVERSE</span></h1>
+  <p class="menu-sub">Build your team. Choose your competition. Own the match.</p>
+  <section id="menu-home" class="menu-grid">
+   <button class="menu-tile primary-tile" id="open-quick"><strong>QUICK PLAY</strong><span>Choose teams, format and match settings.</span></button>
+   <button class="menu-tile" data-mode="leagues"><strong>LEAGUES</strong><span>League competition mode.</span></button>
+   <button class="menu-tile" data-mode="tournaments"><strong>TOURNAMENTS</strong><span>Play through a tournament structure.</span></button>
+   <button class="menu-tile" data-mode="career"><strong>CAREER MANAGER</strong><span>Build and manage a cricket career.</span></button>
+  </section>
+  <section id="menu-quick" class="menu-panel" hidden>
+   <h2>Quick Play — Match Setup</h2>
+   <div class="setup-grid">
+    <div class="setup-field"><label for="setup-team-a">Your team</label><select id="setup-team-a"><option>India</option><option>Australia</option><option>England</option><option>Pakistan</option><option>New Zealand</option><option>South Africa</option><option>Sri Lanka</option><option>West Indies</option><option>Bangladesh</option><option>Afghanistan</option><option>Ireland</option></select></div>
+    <div class="setup-field"><label for="setup-team-b">Opponent</label><select id="setup-team-b"><option>Australia</option><option>India</option><option>England</option><option>Pakistan</option><option>New Zealand</option><option>South Africa</option><option>Sri Lanka</option><option>West Indies</option><option>Bangladesh</option><option>Afghanistan</option><option>Ireland</option></select></div>
+    <div class="setup-field"><label for="setup-format">Match format</label><select id="setup-format"><option value="T20">T20</option><option value="ODI">ODI</option><option value="Test">Test</option><option value="Custom">Custom overs</option></select></div>
+    <div class="setup-field"><label for="setup-overs">Overs per innings</label><select id="setup-overs"><option value="2">2 overs (quick test)</option><option value="5">5 overs</option><option value="10">10 overs</option><option value="20" selected>20 overs</option><option value="50">50 overs</option></select></div>
+    <div class="setup-field"><label for="setup-difficulty">Difficulty</label><select id="setup-difficulty"><option>Beginner</option><option selected>Professional</option><option>World Class</option><option>Legend</option></select></div>
+    <div class="setup-field"><label for="setup-control">Controls</label><select id="setup-control"><option value="auto">Auto detect device</option><option value="swipe">Swipe</option><option value="joystick">Joystick</option><option value="keyboard">Keyboard + mouse</option></select></div>
+   </div>
+   <div class="menu-actions"><button class="btn" id="quick-back">BACK</button><button class="btn primary" id="start-match">START MATCH</button></div>
+   <p class="menu-note">Team selection and match settings are being connected first. Real player squads, full competition seasons and advanced match simulation are still under development.</p>
+  </section>
+  <section id="menu-info" class="menu-panel" hidden>
+   <h2 id="mode-heading">Competition</h2><p id="mode-description" class="menu-note"></p>
+   <div class="menu-actions"><button class="btn" id="info-back">BACK TO MENU</button></div>
+  </section>
+  <div id="menu-status" role="status"></div>
+ </div>
+</div>
+<button class="btn" id="home-button" type="button">☰ MENU</button>
+
 <header><div class="logo">CRICKET <span>UNIVERSE</span></div><div class="tag">3D MATCH PROTOTYPE</div></header>
 
 <div class="control-mode" role="group" aria-label="Control mode">
@@ -118,4 +177,40 @@ function resize(){const w=arena.clientWidth,h=arena.clientHeight;renderer.setSiz
   const b=document.querySelector('[data-shot="'+shot+'"]');if(b)b.click();
  }
 })();
-\n</script></body></html>
+\n
+/* Menu navigation and match configuration */
+(()=>{
+ const menu=document.getElementById('game-menu'),home=document.getElementById('menu-home'),quick=document.getElementById('menu-quick'),info=document.getElementById('menu-info');
+ const status=document.getElementById('menu-status');
+ const show=(panel)=>{home.hidden=panel!=='home';quick.hidden=panel!=='quick';info.hidden=panel!=='info';status.textContent='';};
+ document.getElementById('open-quick').addEventListener('click',()=>show('quick'));
+ document.getElementById('quick-back').addEventListener('click',()=>show('home'));
+ document.getElementById('info-back').addEventListener('click',()=>show('home'));
+ document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
+  const mode=b.dataset.mode, names={leagues:'LEAGUES',tournaments:'TOURNAMENTS',career:'CAREER MANAGER'};
+  document.getElementById('mode-heading').textContent=names[mode];
+  document.getElementById('mode-description').textContent=mode==='leagues'?'League mode is on the development roadmap. The competition screen is reserved for season setup, standings, fixtures and squad management.':mode==='tournaments'?'Tournament mode is on the development roadmap. The competition screen is reserved for tournament selection, groups, fixtures and knockout rounds.':'Career Manager is on the development roadmap. This mode will need player squads, transfers, contracts, team selection and season progression.';
+  show('info');
+ }));
+ const start=document.getElementById('start-match');
+ start.addEventListener('click',()=>{
+  const a=document.getElementById('setup-team-a').value,b=document.getElementById('setup-team-b').value;
+  if(a===b){status.textContent='Choose two different teams.';return;}
+  const fmt=document.getElementById('setup-format').value,overs=Number(document.getElementById('setup-overs').value);
+  const control=document.getElementById('setup-control').value;
+  const effectiveOvers=fmt==='T20'?20:fmt==='ODI'?50:fmt==='Test'?90:overs;
+  if(typeof maxOvers!=='undefined')maxOvers=effectiveOvers;
+  const team=document.querySelector('.panel .card .stat b');
+  if(team)team.textContent=a;
+  const matchTitle=document.querySelector('.panel .card .stat');
+  if(matchTitle)matchTitle.insertAdjacentHTML('afterend','<div class="stat"><span>Opponent</span><b>'+b+'</b></div><div class="stat"><span>Format</span><b>'+fmt+'</b></div>');
+  document.querySelectorAll('[data-overs]').forEach(x=>x.classList.toggle('selected',Number(x.dataset.overs)===effectiveOvers));
+  document.body.classList.remove('menu-open');document.body.classList.add('in-match');menu.hidden=true;
+  if(control==='swipe'||control==='joystick'){const target=document.getElementById(control==='swipe'?'mode-swipe':'mode-joystick');if(target)target.click();}
+  const reset=document.getElementById('reset');if(reset)reset.click();
+  const label=document.getElementById('phase');if(label)label.textContent='Match setup · '+a+' vs '+b;
+  const comment=document.getElementById('commentary');if(comment)comment.textContent=a+' vs '+b+' · '+fmt+' · '+effectiveOvers+' overs · '+document.getElementById('setup-difficulty').value;
+ });
+ document.getElementById('home-button').addEventListener('click',()=>{menu.hidden=false;document.body.classList.add('menu-open');document.body.classList.remove('in-match');show('home');});
+})();
+</script></body></html>
